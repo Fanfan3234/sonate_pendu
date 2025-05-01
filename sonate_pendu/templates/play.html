@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}Sonate | Jeu du pendu{% endblock %}
+
+{% block header %}
+<h2>Bonjour {{ nom }} !</h2>
+<br />
+<p>Mot à deviner : {{ mot_affiche }}</p>
+<br />
+<p>Vies restantes : {{ vies }}</p>
+<br />
+<form method="" action="/home">
+    <button type="submit">Quitter</button>
+</form>
+<br />
+{% endblock %}
+{% block content %}
+{% if fini %}
+<p>Tu as deviné le mot : <strong>{{ mot }}</strong></p>
+<form method="" action="/home">
+    <button type="submit">Rejouer</button>
+</form>
+{% elif perdu %}
+<p>Tu as perdu !<br />
+    Le mot était : <strong>{{ mot }}</strong></p>
+<form method="" action="/home">
+    <button type="submit">Rejouer</button>
+</form>
+{% else %}
+<br />
+<p>Choisissez une lettre :</p>
+{% for lettre in alphabet %}
+
+<a href="{{ url_for('play', lettre=lettre) }}">
+    <button {% if lettre in lettres_trouvees %}disabled{% endif %}>
+        {{ lettre }}
+    </button>
+</a>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
